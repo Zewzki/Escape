@@ -18,20 +18,16 @@ public class GameFrame extends JFrame {
         SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
         this.panel = panel;
 
-        frameWidth = (int) (SCREEN_WIDTH * (3.0 / 4.0));
-        frameHeight = (int) (SCREEN_HEIGHT * (3.0 / 4.0));
-
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(this.panel, gbc);
+        frameWidth = (int) (SCREEN_WIDTH * (5.0 / 6.0));
+        frameHeight = (int) (SCREEN_HEIGHT * (5.0 / 6.0));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(frameWidth, frameHeight);
         setResizable(false);
         setLocationRelativeTo(null);
+
+        add(this.panel);
+
         setVisible(true);
 
     }

@@ -2,7 +2,7 @@ package Game;
 
 public class EscapeGame {
 
-    private final int ESCAPE_BOARD_DIAM = 15;
+    private final int ESCAPE_BOARD_DIAM = 7;
 
     private final Board board;
 

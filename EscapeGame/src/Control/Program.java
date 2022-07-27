@@ -13,7 +13,6 @@ public class Program {
         GamePanel panel = new GamePanel(game);
         GameFrame frame = new GameFrame(panel);
 
-
     }
 
 }
