@@ -43,4 +43,12 @@ public class Board {
 
     }
 
+    //region Getters
+
+    public Vertex[][][] getBoardArr() { return boardArr; }
+    public int getDiameter() { return diameter; }
+    public int getRadius() { return radius; }
+
+    //endregion
+
 }
