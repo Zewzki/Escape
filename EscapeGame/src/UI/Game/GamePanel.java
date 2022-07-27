@@ -26,7 +26,6 @@ public class GamePanel extends JPanel {
         this.boardImage = new BufferedImage(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         setPreferredSize(new Dimension(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT));
-
     }
 
     @Override

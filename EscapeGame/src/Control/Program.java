@@ -4,6 +4,9 @@ import Game.EscapeGame;
 import UI.Game.GameFrame;
 import UI.Game.GamePanel;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Program {
 
     public static void main(String[] args) {
