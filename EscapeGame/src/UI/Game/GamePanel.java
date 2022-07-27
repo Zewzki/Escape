@@ -1,5 +1,6 @@
 package UI.Game;
 
+import Common.Pair;
 import Game.EscapeGame;
 import Game.Vertex;
 
@@ -9,7 +10,11 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
+    private final int DEFAULT_PANEL_WIDTH = 800;
+    private final int DEFAULT_PANEL_HEIGHT = 800;
+
     private final int HEX_TILE_RADIUS_PX = 75;
+    private final int AXIS_OFFSET_DEG = 60;
 
     private final EscapeGame game;
 
@@ -18,69 +23,50 @@ public class GamePanel extends JPanel {
     public GamePanel(EscapeGame game) {
 
         this.game = game;
-        this.boardImage = new BufferedImage(1920, 1080, BufferedImage.TYPE_3BYTE_BGR);
-        JLabel label = new JLabel("     .\"-,.__\n" +
-                "                 `.     `.  ,\n" +
-                "              .--'  .._,'\"-' `.\n" +
-                "             .    .'         `'\n" +
-                "             `.   /          ,'\n" +
-                "               `  '--.   ,-\"'\n" +
-                "                `\"`   |  \\\n" +
-                "                   -. \\, |\n" +
-                "                    `--Y.'      ___.\n" +
-                "                         \\     L._, \\\n" +
-                "               _.,        `.   <  <\\                _\n" +
-                "             ,' '           `, `.   | \\            ( `\n" +
-                "          ../, `.            `  |    .\\`.           \\ \\_\n" +
-                "         ,' ,..  .           _.,'    ||\\l            )  '\".\n" +
-                "        , ,'   \\           ,'.-.`-._,'  |           .  _._`.\n" +
-                "      ,' /      \\ \\        `' ' `--/   | \\          / /   ..\\\n" +
-                "    .'  /        \\ .         |\\__ - _ ,'` `        / /     `.`.\n" +
-                "    |  '          ..         `-...-\"  |  `-'      / /        . `.\n" +
-                "    | /           |L__           |    |          / /          `. `.\n" +
-                "   , /            .   .          |    |         / /             ` `\n" +
-                "  / /          ,. ,`._ `-_       |    |  _   ,-' /               ` \\\n" +
-                " / .           \\\"`_/. `-_ \\_,.  ,'    +-' `-'  _,        ..,-.    \\`.\n" +
-                ".  '         .-f    ,'   `    '.       \\__.---'     _   .'   '     \\ \\\n" +
-                "' /          `.'    l     .' /          \\..      ,_|/   `.  ,'`     L`\n" +
-                "|'      _.-\"\"` `.    \\ _,'  `            \\ `.___`.'\"`-.  , |   |    | \\\n" +
-                "||    ,'      `. `.   '       _,...._        `  |    `/ '  |   '     .|\n" +
-                "||  ,'          `. ;.,.---' ,'       `.   `.. `-'  .-' /_ .'    ;_   ||\n" +
-                "|| '              V      / /           `   | `   ,'   ,' '.    !  `. ||\n" +
-                "||/            _,-------7 '              . |  `-'    l         /    `||\n" +
-                ". |          ,' .-   ,' ||               | .-.        `.      .'     ||\n" +
-                " `'        ,'    `\".'    |               |    `.        '. -.'       `'\n" +
-                "          /      ,'      |               |,'    \\-.._,.'/'\n" +
-                "          .     /        .               .       \\    .''\n" +
-                "        .`.    |         `.             /         :_,'.'\n" +
-                "          \\ `...\\   _     ,'-.        .'         /_.-'\n" +
-                "           `-.__ `,  `'   .  _.>----''.  _  __  /\n" +
-                "                .'        /\"'          |  \"'   '_\n" +
-                "               /_|.-'\\ ,\".             '.'`__'-( \\\n" +
-                "                 / ,\"'\"\\,'               `/  `-.|\" mh" +
-                "");
-        this.add(label);
+        this.boardImage = new BufferedImage(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+
+        setPreferredSize(new Dimension(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT));
     }
 
     @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
         int centerX = boardImage.getWidth() / 2;
         int centerY = boardImage.getHeight() / 2;
+
+        System.out.println("Center: (" + centerX + "," + centerY + ")");
 
         Vertex[][][] vertices = game.getBoard().getBoardArr();
 
         int centerIndex = vertices.length / 2;
 
+        Graphics2D biGraphics = boardImage.createGraphics();
+
+        biGraphics.setColor(Color.BLACK);
+
         for (int x = 0; x < vertices.length; x++) {
             for (int y = 0; y < vertices[x].length; y++) {
                 for(int z = 0; z < vertices[x][y].length; z++) {
 
-                    int startX = centerX + ((x - centerIndex) * HEX_TILE_RADIUS_PX);
-                    startX += ((y - centerIndex) * HEX_TILE_RADIUS_PX);
+                    double startX = centerX + ((x - centerIndex) * HEX_TILE_RADIUS_PX);
+                    startX += ((y - centerIndex) * HEX_TILE_RADIUS_PX) * Math.cos(Math.toRadians(AXIS_OFFSET_DEG));
+                    startX += ((z - centerIndex) * HEX_TILE_RADIUS_PX) * Math.cos(Math.toRadians(2 * AXIS_OFFSET_DEG));
 
-                    // TODO: finish this part
+                    double startY = centerY + (((y - centerIndex) * HEX_TILE_RADIUS_PX) * Math.sin(Math.toRadians(AXIS_OFFSET_DEG)));
+                    startY += ((z - centerIndex) * HEX_TILE_RADIUS_PX) * Math.sin(Math.toRadians(2 * AXIS_OFFSET_DEG));
+
+
+                    Pair<Double, Double>[] endCords = new Pair[6];
+                    for (int i = 0; i < endCords.length; i++) {
+                        endCords[i] = new Pair<>(startX + (HEX_TILE_RADIUS_PX * Math.cos(Math.toRadians(i * AXIS_OFFSET_DEG))), startY + (HEX_TILE_RADIUS_PX * Math.sin(Math.toRadians(i * AXIS_OFFSET_DEG))));
+                    }
+
+                    g.fillOval((int) startX, (int) startX, 1, 1);
+
+                    for(int i = 0; i < endCords.length; i++) {
+                        g.drawLine((int) startX, (int) startY, endCords[i].getItem1().intValue(), endCords[i].getItem2().intValue());
+                    }
 
                 }
 
@@ -88,6 +74,7 @@ public class GamePanel extends JPanel {
 
         }
 
+        //g.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
     }
 }
