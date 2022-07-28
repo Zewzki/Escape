@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
-    private final int DEFAULT_PANEL_WIDTH = 800;
-    private final int DEFAULT_PANEL_HEIGHT = 800;
+    private final int DEFAULT_PANEL_WIDTH = 1100;
+    private final int DEFAULT_PANEL_HEIGHT = 950;
 
-    private final int HEX_TILE_RADIUS_PX = 75;
+    private final int HEX_TILE_RADIUS_PX = 60;
     private final int AXIS_OFFSET_DEG = 60;
 
     private final EscapeGame game;
@@ -65,6 +65,14 @@ public class GamePanel extends JPanel {
                     g.fillOval((int) startX, (int) startX, 1, 1);
 
                     for(int i = 0; i < endCords.length; i++) {
+
+                        // skip drawing certain points on edge
+                        if (x == 0 && (i == 2 || i == 3 || i == 4)) continue;
+                        if (x == vertices.length - 1 && (i == 0 || i == 1 || i == 5)) continue;
+
+                        if ((y == 0 && z == 0) && (i == 1 || i == 2)) continue;
+                        if ((y == vertices.length - 1  && z == vertices.length - 1) && (i == 0 || i == 1 || i == 2)) continue;
+
                         g.drawLine((int) startX, (int) startY, endCords[i].getItem1().intValue(), endCords[i].getItem2().intValue());
                     }
 
@@ -77,4 +85,9 @@ public class GamePanel extends JPanel {
         //g.drawImage(boardImage, 0, 0, boardImage.getWidth(), boardImage.getHeight(), null);
 
     }
+
+    public void resize(int frameWidth, int frameHeight) {
+
+    }
+
 }
