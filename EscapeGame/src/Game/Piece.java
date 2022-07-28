@@ -1,15 +1,15 @@
 package Game;
 
-import Common.Enums;
+import Common.Common;
 
 public class Piece {
 
-    private final Enums.PIECE_TYPE type;
+    private final Common.PIECE_TYPE type;
 
-    public Piece(Enums.PIECE_TYPE type) {
+    public Piece(Common.PIECE_TYPE type) {
         this.type = type;
     }
 
-    public Enums.PIECE_TYPE getType() { return type; }
+    public Common.PIECE_TYPE getType() { return type; }
 
 }

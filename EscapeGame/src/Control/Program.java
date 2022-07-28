@@ -1,5 +1,6 @@
 package Control;
 
+import Common.Common;
 import Game.EscapeGame;
 import UI.Game.GameFrame;
 import UI.Game.GamePanel;
@@ -14,7 +15,9 @@ public class Program {
         EscapeGame game = new EscapeGame();
 
         GamePanel panel = new GamePanel(game);
-        GameFrame frame = new GameFrame(panel);
+        GameFrame frame = new GameFrame(panel, Common.SCREEN_WIDTH, Common.SCREEN_HEIGHT);
+
+        panel.resizePanel(frame.getWidth(), frame.getHeight());
 
     }
 

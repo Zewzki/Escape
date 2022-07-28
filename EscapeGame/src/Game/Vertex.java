@@ -1,13 +1,13 @@
 package Game;
 
-import Common.Enums;
+import Common.Common;
 
 public class Vertex {
 
-    private final Enums.VERTEX_TYPE type;
+    private final Common.VERTEX_TYPE type;
     private final int x, y, z;
 
-    public Vertex(int x, int y, int z, Enums.VERTEX_TYPE type) {
+    public Vertex(int x, int y, int z, Common.VERTEX_TYPE type) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -15,7 +15,7 @@ public class Vertex {
     }
 
     //region Getters
-    public Enums.VERTEX_TYPE getType() { return type; }
+    public Common.VERTEX_TYPE getType() { return type; }
     public int getX() { return x; }
     public int getY() { return y; }
     public int getZ() { return z; }

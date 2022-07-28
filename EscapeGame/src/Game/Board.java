@@ -1,6 +1,6 @@
 package Game;
 
-import Common.Enums;
+import Common.Common;
 
 public class Board {
 
@@ -12,27 +12,22 @@ public class Board {
     public Board(int diameter) {
 
         this.diameter = diameter;
-        this.radius = diameter / 2;
+        radius = diameter / 2;
         boardArr = new Vertex[this.diameter][this.diameter][this.diameter];
 
         for(int i = 0; i < this.diameter; i++) {
             for(int j = 0; j < this.diameter; j++) {
                 for(int k = 0; k < this.diameter; k++) {
 
-                    Enums.VERTEX_TYPE vType = Enums.VERTEX_TYPE.PLAIN;
+                    Common.VERTEX_TYPE vType = Common.VERTEX_TYPE.PLAIN;
 
-                    if (i == this.radius + 1 && j == this.radius + 1 && k == this.radius + 1) {
-                        vType = Enums.VERTEX_TYPE.KING_START;
-                    }
-                    else if (i == this.radius + 1 || j == this.radius + 1 || k == this.radius + 1) {
+                    int polarX = i - radius;
+                    int polarY = j - radius;
+                    int polarZ = k - radius;
 
-                        if (i == 0 || i == this.diameter - 1) vType = Enums.VERTEX_TYPE.KING_ESCAPE;
-                        else if (j == 0 || j == this.diameter - 1) vType = Enums.VERTEX_TYPE.KING_ESCAPE;
-                        else if (k == 0 || k == this.diameter - 1) vType = Enums.VERTEX_TYPE.KING_ESCAPE;
-                        else if (i == 3 || i == this.diameter - 4) vType = Enums.VERTEX_TYPE.FORT;
-                        else if (j == 3 || j == this.diameter - 4) vType = Enums.VERTEX_TYPE.FORT;
-                        else if (k == 3 || k == this.diameter - 4) vType = Enums.VERTEX_TYPE.FORT;
-
+                    if (polarX == 0 && polarY == 0 && polarZ == 0) {
+                        vType = Common.VERTEX_TYPE.KING_START;
+                        System.out.println(i + "," + j + "," + k);
                     }
 
                     boardArr[i][j][k] = new Vertex(i - radius, j - radius, k - radius, vType);
@@ -46,6 +41,9 @@ public class Board {
     //region Getters
 
     public Vertex[][][] getBoardArr() { return boardArr; }
+
+    public Vertex getVertex(int polarX, int polarY, int polarZ) { return boardArr[polarX + radius][polarY + radius][polarZ + radius]; }
+
     public int getDiameter() { return diameter; }
     public int getRadius() { return radius; }
 

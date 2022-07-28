@@ -1,6 +1,11 @@
 package Common;
 
-public class Enums {
+import java.awt.*;
+
+public class Common {
+
+    public static int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+    public static int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     public enum GAME_STATE {
         PLAYER1TURN,
